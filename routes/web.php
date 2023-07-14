@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\RegisterationController;
+use App\Http\Controllers\SingleActionController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,21 +16,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register', function () {
-    $pageName = "Registration";
-    $data = compact('pageName');
-    return view('form')->with($data);
-});
+// Route::get('/register', function () {
+//     $pageName = "Registration";
+//     $data = compact('pageName');
+//     return view('form')->with($data);
+// });
 
-Route::get('/update', function () {
-    $pageName = "Update Info";
-    $data = compact('pageName');
-    return view('form')->with($data);
-});
+
+// Route::post('/register', function () {
+//     $pageName = "Registration";
+//     $data = compact('pageName');
+//     return view('form')->with($data);
+// });
+
+
+// Route::get('/update', function () {
+//     $pageName = "Update Info";
+//     $data = compact('pageName');
+//     return view('form')->with($data);
+// });
 
 
 // Route::get('/{name?}', function ($naam="") {
@@ -39,7 +50,18 @@ Route::get('/update', function () {
 // });
 
 
+Route::get('/register' , [RegisterationController::class , 'form']);
+Route::post('/register' , [RegisterationController::class , 'createRecord']);
+Route::get('/unique' , SingleActionController::class);
+Route::get('/sessions' , function(){
 
+echo "<pre>";
 
+print_r($_SESSION);
+echo "</pre>";
+
+});
+
+Route::resource('/users' , UsersController::class);
 
 ?>
