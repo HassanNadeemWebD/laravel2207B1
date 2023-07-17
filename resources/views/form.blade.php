@@ -12,63 +12,73 @@
 
 <body class="container">
     <h1>{{ $pageName }}</h1>
-{{-- @php
+    {{-- @php
     print_r($errors);
 @endphp --}}
 
-    <form action="{{url('/')}}/register"  method="post" >
+    <form action="{{ url('/').$action }}" method="post">
         <!-- 2 column grid layout with text inputs for the first and last names -->
         {{-- Cross-Site Request Forgery --}}
-        @csrf  
+        @csrf
         <div class="row mb-4">
             <div class="col">
                 <div class="form-outline">
-                    <input type="text" id="form3Example1"  name="fname" class="form-control" value="{{old('fname')}}" />
-                    <label class="form-label" for="form3Example1">First name</label>
-                @error('fname')
-                
-                <span class="text-danger" > {{$message}} </span>
-                @enderror
+                    <input type="text" id="form3Example1" name="fname" class="form-control"
+                        @if ($pageName == 'Registration') value="{{ old('fname') }}"
+                    @else 
+                    value="{{ @$student['firstName'] }}" @endif />
+                        <label class="form-label" for="form3Example1">First name</label>
+                    @error('fname')
+                        <span class="text-danger"> {{ $message }} </span>
+                    @enderror
                 </div>
 
             </div>
             <div class="col">
                 <div class="form-outline">
-                    <input type="text" id="form3Example2" name="lname" class="form-control" />
+                    <input type="text" id="form3Example2" name="lname" class="form-control"
+                        @if ($pageName == 'Registration') value="{{ old('lname') }}"
+                    @else 
+                    value="{{ @$student['lastName'] }}" @endif />
                     <label class="form-label" for="form3Example2">Last name</label>
                 </div>
                 @error('lname')
-                
-                <span class="text-danger" > {{$message}} </span>
+                    <span class="text-danger"> {{ $message }} </span>
                 @enderror
             </div>
         </div>
 
         <!-- Email input -->
         <div class="form-outline mb-4">
-            <input type="email" id="form3Example3" name="email" class="form-control" />
+            <input type="email" id="form3Example3" name="email" class="form-control"
+                @if ($pageName == 'Registration') value="{{ old('email') }}"
+            @else 
+            value="{{ @$student['email'] }}"  @endif />
             <label class="form-label" for="form3Example3">Email address</label>
             @error('email')
-                
-            <span class="text-danger" > {{$message}} </span>
+                <span class="text-danger"> {{ $message }} </span>
             @enderror
         </div>
 
         <!-- Password input -->
         <div class="form-outline mb-4">
-            <input type="password" id="form3Example4" name="password" class="form-control" />
+            <input type="password" id="form3Example4" name="password" class="form-control"
+                @if ($pageName == 'Registration') value="{{ old('password') }}"
+            @else 
+            value="{{ @$student['password'] }}"  @endif />
             <label class="form-label" for="form3Example4">Password</label>
             @error('password')
-                
-            <span class="text-danger" > {{$message}} </span>
+                <span class="text-danger"> {{ $message }} </span>
             @enderror
         </div>
         <div class="form-outline mb-4">
-            <input type="password" id="form3Example4" name="password_confirmation" class="form-control" />
+            <input type="password" id="form3Example4" name="password_confirmation" class="form-control"
+                @if ($pageName == 'Registration') value="{{ old('password_confirmation') }}"
+            @else 
+            value="{{ @$student['password'] }}" @endif />
             <label class="form-label" for="form3Example4">Confirm Password</label>
             @error('password_confirmation')
-                
-            <span class="text-danger" > {{$message}} </span>
+                <span class="text-danger"> {{ $message }} </span>
             @enderror
         </div>
 
@@ -81,7 +91,7 @@
         </div> --}}
 
         <!-- Submit button -->
-        <button type="submit" name="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+        <button type="submit" name="submit" class="btn btn-primary btn-block mb-4">{{$btn}}</button>
 
         <!-- Register buttons -->
         {{-- <div class="text-center">
@@ -105,5 +115,6 @@
     </form>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </html>

@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route::get('/register', function () {
 //     $pageName = "Registration";
@@ -49,10 +49,13 @@ Route::get('/', function () {
 //     return view('index')->with($data);
 // });
 
-
+Route::get('/' , [RegisterationController::class , 'show']);
 Route::get('/register' , [RegisterationController::class , 'form']);
 Route::post('/register' , [RegisterationController::class , 'createRecord']);
 Route::get('/unique' , SingleActionController::class);
+Route::get('/edit/{id}' , [RegisterationController::class , 'edit']);
+Route::post('/update/{id}' , [RegisterationController::class , 'update']);
+Route::get('/delete/{id}' , [RegisterationController::class , 'delete']);
 Route::get('/sessions' , function(){
 
 echo "<pre>";

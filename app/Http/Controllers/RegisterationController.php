@@ -13,8 +13,11 @@ class RegisterationController extends Controller
     function form()
     {
         $pageName = "Registration";
-        $data = compact('pageName');
-        return view('form')->with($data);
+        $action = "/register";
+        $btn = 'register';
+        $data = compact('pageName','action','btn');
+
+        return view('form')->with($data );
     }
 
     function createRecord(Request $request)
@@ -45,15 +48,62 @@ class RegisterationController extends Controller
 // print_r($request->all());
 // echo $request['fname'];
 
-    }
+  }
+
+  function show(){
+$data = Students::all();
+$students = $data->toArray();
+// print_r($student->toArray());
+return view('show' , compact('students') );
 
 
 
-    function update()
+
+  }
+
+  function edit($id){
+
+    $find = Students::find($id);
+$student =  $find->toArray();
+$pageName = "Edit Info";
+$action = "/update/$id";
+$btn = "Update";
+
+// $action =  $action."/$id";
+    // print_r($student->toArray());
+
+    return view('form' , compact('student' , 'pageName', 'action','btn'));
+
+
+// echo $id;
+
+  }
+
+
+
+    function update(Request $request,$id)
     {
-        $pageName = "Update Info";
-        $data = compact('pageName');
-        return view('form')->with($data);
+        $student = Students::find($id);
+        $student->firstName = $request['fname'];
+        $student->lastName = $request['lname'];
+        $student->email = $request['email'];
+        $student->password = $request['password'];
+        $student->save();
+
+        return redirect('/');
+        // $pageName = "Update Info";
+        // $data = compact('pageName');
+        // return view('form')->with($data);
     }
+
+function delete($id){
+
+    $student = Students::find($id);
+    $student->delete();
+    return redirect('/');
+
+
+
+}
 
 }
